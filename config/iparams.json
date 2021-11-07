@@ -1,0 +1,15 @@
+{
+    "APIKey": {
+      "display_name": "API Key",
+      "description": "Please enter your API key",
+      "type": "text",
+      "required": true,
+      "secure": true
+    },
+    "viewHistorySize": {
+        "display_name": "Tickets Count",
+        "description": "Please enter the number of tickets you want to track for recently viewed section.",
+        "type": "number",
+        "required": true
+    }
+}
