@@ -47,6 +47,10 @@ You are now good to go!
 | Data Method | 1. To get current logged in user details <br/>2.  To get current domain <br/> 3. To get current ticket details | 
 | Server Method Invocation | Calling server side to store/retrieve/delete data |
 
+### Project Pitch Video
+
+[![handyman - pitch video](http://img.youtube.com/vi/OKv9gQWu3GY/maxresdefault.jpg)](http://www.youtube.com/watch?v=OKv9gQWu3GY "Handyman | The Freshworks Refresh App Challenge Submission")
+
 ### Roadmap & Known Issues
 
  - [ ] Attachment information to be shown in a Modal for the Agent to view all the information from the ticket page itself. 
