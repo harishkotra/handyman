@@ -26,7 +26,7 @@
   },
   "whitelisted-domains": [
     "https://sentim-api.herokuapp.com", 
-    "https://holikau.freshdesk.com"
+    "https://*.freshdesk.com"
   ],
   "engines": {
     "node": "12.0.0",

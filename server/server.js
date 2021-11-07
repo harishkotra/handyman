@@ -68,28 +68,28 @@ async function saveTicketForAgent(request) {
             // Do nothing 
         }
 
-        console.log('Existing tickets are ' + JSON.stringify(existingTickets)); 
+        //console.log('Existing tickets are ' + JSON.stringify(existingTickets)); 
 
         if (existingTickets === null || existingTickets.savedTickets === null) {
-            console.log('Existing ticket is null. Saving the first ticket'); 
+            //console.log('Existing ticket is null. Saving the first ticket'); 
             let saveTicketResponse = await saveTicketInDb(request.agentId, request.ticketId, request.personalNote);
-            console.log('Save ticket response for first ticket ' + JSON.stringify(saveTicketResponse)); 
+            //console.log('Save ticket response for first ticket ' + JSON.stringify(saveTicketResponse)); 
 
             return saveTicketResponse; 
         }
 
-        console.log("There are few existing tickets for agent: " + JSON.stringify(existingTickets.savedTickets)); 
+        //console.log("There are few existing tickets for agent: " + JSON.stringify(existingTickets.savedTickets)); 
         let filteredTicketByRequestedId = existingTickets.savedTickets.filter((ticket) => ticket.ticketId === request.ticketId);
 
         if (filteredTicketByRequestedId.length > 0) {
-            console.info("Ticket ID " + request.ticketId + " is already added for agent ID " + request.agentId); 
+            //console.info("Ticket ID " + request.ticketId + " is already added for agent ID " + request.agentId); 
             return 'Ticket already added'; 
         }
 
-        console.log('Trying to add ticket to existing ticket'); 
+        //console.log('Trying to add ticket to existing ticket'); 
 
         let saveTicketResponse = await saveTicketInDb(request.agentId, request.ticketId, request.personalNote);
-        console.log('Save ticket response for adding ticket ' + JSON.stringify(saveTicketResponse)); 
+        //console.log('Save ticket response for adding ticket ' + JSON.stringify(saveTicketResponse)); 
         
         return saveTicketResponse; 
 
@@ -114,11 +114,11 @@ async function removeAgentTicket(agentId, ticketId) {
             throw "Ticket is not saved for the agent"; 
         }
 
-        console.log("There are few existing tickets for agent with ID " + agentId + ": " + JSON.stringify(existingTickets.savedTickets)); 
+        //console.log("There are few existing tickets for agent with ID " + agentId + ": " + JSON.stringify(existingTickets.savedTickets)); 
         let filteredTicketByRequestedId = existingTickets.savedTickets.filter((ticket) => ticket.ticketId === ticketId);
 
         if (filteredTicketByRequestedId.length == 0) {
-            console.info("No ticket found with ticket ID " + ticketId + " for agent ID " + agentId);
+            //console.info("No ticket found with ticket ID " + ticketId + " for agent ID " + agentId);
             throw "Ticket is not saved for the agent"; 
         }
 
@@ -127,7 +127,7 @@ async function removeAgentTicket(agentId, ticketId) {
         return $db.update("agentId: " + agentId, "set", { savedTickets: remainingTickets})
         .then(
             function (response) {
-                console.info('Removed the ticket ' +  ticketId + ' from agent with id ' + agentId);
+                //console.info('Removed the ticket ' +  ticketId + ' from agent with id ' + agentId);
                 return response;
             },
             function (error) {
@@ -144,7 +144,7 @@ async function removeAgentTicket(agentId, ticketId) {
 
 function getAgentTicketsFromDb(agentId) {
     try {
-        console.info("Getting tickets for agent with ID " + agentId); 
+        //console.info("Getting tickets for agent with ID " + agentId); 
         return $db.get("agentId: " + agentId)
     } catch(err) {
         console.error('Error while fetching saved ticket ' + JSON.stringify(err));
@@ -153,7 +153,7 @@ function getAgentTicketsFromDb(agentId) {
 }
 
 function saveTicketInDb(agentId, ticketId, personalNote) {
-    console.log('Saving ticket in DB for agent ID ' + agentId + ' and ticket ID ' + ticketId);
+    //console.log('Saving ticket in DB for agent ID ' + agentId + ' and ticket ID ' + ticketId);
     if (agentId === null || agentId === undefined || ticketId === null || ticketId === undefined) {
         throw 'Agent ID and ticket ID cannot be null'; 
     }
@@ -161,7 +161,7 @@ function saveTicketInDb(agentId, ticketId, personalNote) {
     return $db.update("agentId: " + agentId, "append", { savedTickets: [{'ticketId': ticketId, 'personalNote': personalNote}]})
         .then(
             function (response) {
-                console.info('Appended the tickets for agent ID ' + agentId);
+                //console.info('Appended the tickets for agent ID ' + agentId);
                 return response;
             },
             function (error) {
