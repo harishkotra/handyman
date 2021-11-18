@@ -88,7 +88,7 @@ async function saveTicketForAgent(request) {
 
         //console.log('Trying to add ticket to existing ticket'); 
 
-        let saveTicketResponse = await saveTicketInDb(request.agentId, request.ticketId, request.personalNote);
+        let saveTicketResponse = await saveTicketInDb(request.agentId, request.ticketId, request.ticketSubject, request.personalNote, request.savedAt);
         //console.log('Save ticket response for adding ticket ' + JSON.stringify(saveTicketResponse)); 
         
         return saveTicketResponse; 
@@ -152,13 +152,13 @@ function getAgentTicketsFromDb(agentId) {
     }
 }
 
-function saveTicketInDb(agentId, ticketId, personalNote) {
+function saveTicketInDb(agentId, ticketId, ticketSubject, personalNote, savedAt) {
     //console.log('Saving ticket in DB for agent ID ' + agentId + ' and ticket ID ' + ticketId);
     if (agentId === null || agentId === undefined || ticketId === null || ticketId === undefined) {
         throw 'Agent ID and ticket ID cannot be null'; 
     }
 
-    return $db.update("agentId: " + agentId, "append", { savedTickets: [{'ticketId': ticketId, 'personalNote': personalNote}]})
+    return $db.update("agentId: " + agentId, "append", { savedTickets: [{'ticketId': ticketId, 'ticketSubject': ticketSubject, 'personalNote': personalNote, 'savedAt': savedAt}]})
         .then(
             function (response) {
                 //console.info('Appended the tickets for agent ID ' + agentId);

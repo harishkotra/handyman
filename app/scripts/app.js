@@ -23,6 +23,19 @@ function onAppActivate() {
     textElement.innerHTML = `${payload.contact.name}'s personal handyman is here to assist 😍!`;
   }
 
+  /**
+  * Opens modal to show bookmarks
+  */
+  client.interface.trigger('showModal', {
+    title: 'Bookmarklet',
+    template: './views/bookmarks.html'
+  }).then(null, function () {
+    client.interface.trigger('showNotify', {
+      type: 'error',
+      message: 'Some error has occured in \'Start timer app\'.'
+    });
+  });
+
   //get 3 sentiment spans from HTML
   const pos = document.getElementById("pos")
   const neg = document.getElementById("neg")
@@ -44,7 +57,6 @@ function onAppActivate() {
       JSON.parse(attachmentsData).forEach(item => {
 
         item.attachments.forEach(attachment => {
-          
           let data = {
             'bytes': attachment.size,
             'decimals': 2
@@ -57,7 +69,7 @@ function onAppActivate() {
         })
       })
 
-      document.getElementById("totalAttachmentsSize").innerHTML = "<strong>Total Attachments Size: </strong>" + totalAttachmentsSize + "bytes";
+      document.getElementById("totalAttachmentsSize").innerHTML = "<strong>Total Attachments Size: </strong>" + totalAttachmentsSize + " bytes";
 
     })
     
@@ -114,7 +126,7 @@ function onAppActivate() {
  * @param {string} thumb_url : Thumbnail URL of the attachment.
  * @param {string} content_type : Information on the type of the attachment, for example - image/png, text, zip, and so on.
  */
-function displayAttachmentsTable(name, size, created_at,attachment_url, thumb_url, content_type){
+function displayAttachmentsTable(name, size, created_at, attachment_url, thumb_url, content_type){
   
   const table = document.getElementById('attachmentsTable').insertRow(1);
 
@@ -150,8 +162,6 @@ function displayBookmarkedTickets(){
                 client.request.invoke('displayBookmarkedTickets', data)
                     .then(
                         function (response) {
-                            // console.log('Tickets received from the backend are');
-                            // console.log(response.response.savedTickets);
 
                             const bookmarksTable = document.getElementById('bookmarksTable');
 
@@ -169,7 +179,7 @@ function displayBookmarkedTickets(){
                             }
 
                             response.response.savedTickets.forEach(ticket => {
-                                insertRow(freshdeskDomain.domainName, ticket.ticketId, ticket.personalNote);
+                                insertRow(freshdeskDomain.domainName, ticket.ticketId, ticket.ticketSubject, ticket.personalNote, ticket.savedAt);
                                 getCurrentTicket().then(function(currentTicket) {
                                   if(currentTicket.id == ticket.ticketId) {
                                     document.getElementById('bookmarksForm').style.display = "none";
@@ -198,19 +208,25 @@ function displayBookmarkedTickets(){
  * Function to display bookmarked tickets in a table in the sidebar.
  * @param {string} freshdeskDomainName 
  * @param {integer} ticketId 
- * @param {string} personalNote 
+ * @param {string} ticketSubject
+ * @param {string} personalNote
+ * @param {timestamp} savedAt 
  */
-function insertRow(freshdeskDomainName, ticketId, personalNote) {
+function insertRow(freshdeskDomainName, ticketId, ticketSubject, personalNote, savedAt) {
   const table = document.getElementById('bookmarksTable').insertRow(1);
 
   const c1 = table.insertCell(0);
   const c2 = table.insertCell(1);
   const c3 = table.insertCell(2);
+  const c4 = table.insertCell(3);
+  const c5 = table.insertCell(4);
 
   c1.innerHTML = '<a target="blank" href="https://' + freshdeskDomainName + '/a/tickets/'
       + ticketId + '" data-toggle="tooltip" data-placement="top" title="View Ticket" >' + ticketId + '</a>';
-  c2.innerHTML = personalNote;
-  c3.innerHTML = '<input id="' + ticketId + '" type="image" src="styles/images/delete.svg" style="height:20px; width:20px" onClick="removeTicket(this);" data-toggle="tooltip" data-placement="top" title="Delete bookmark" />';
+  c2.innerHTML = ticketSubject;
+  c3.innerHTML = personalNote;
+  c4.innerHTML = savedAt;
+  c5.innerHTML = '<input id="' + ticketId + '" type="image" src="styles/images/delete.svg" style="height:20px; width:20px" onClick="removeTicket(this);" data-toggle="tooltip" data-placement="top" title="Delete bookmark" />';
 }
 
 /**
@@ -222,7 +238,9 @@ function bookmarkTicket() {
           let data = {
               'agentId': loggedInUser.id,
               'ticketId': ticket.id,
-              'personalNote': document.getElementById("personalNote").value
+              'ticketSubject': ticket.subject,
+              'personalNote': document.getElementById("personalNote").value,
+              'savedAt': new Date().getTime()
           };
 
           client.request.invoke("bookmarkTicket", data).then(
@@ -248,7 +266,7 @@ function bookmarkTicket() {
               function (err) {
                   console.error('Error while saving ticket');
                   console.error(err);
-              });
+          });
       })
   });
 }
