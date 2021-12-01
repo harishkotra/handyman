@@ -5,7 +5,7 @@
       "location": {
         "ticket_top_navigation": {
           "url": "index.html",
-          "icon": "styles/images/icon.svg"
+          "icon": "styles/images/bookmarklet.svg"
         }
       },
       "functions": {
@@ -17,19 +17,15 @@
         },
         "removeAgentsTicket": {
           "timeout": 5
-        },
-        "formatBytes": {
-          "timeout": 5
         }
       }
     }
   },
   "whitelisted-domains": [
-    "https://sentim-api.herokuapp.com", 
     "https://*.freshdesk.com"
   ],
   "engines": {
-    "node": "12.0.0",
-    "fdk": "7.1.0"
+    "node": "12.22.7",
+    "fdk": "7.1.2"
   }
 }

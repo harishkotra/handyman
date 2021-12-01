@@ -3,49 +3,49 @@
     <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
     <link rel="stylesheet" type="text/css" href="../styles/style.css" />
     <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css" />
+    <script src="../scripts/bookmarks.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
     <div class="container-fluid">
       <p id="apptext"></p>
-      <div class="accordion-container">
         <!-- Bookmarklet accordion -->
-        <div class="ac-panel">
-            <div class="panel-content">
-              <div class="form-group">
-                <p>Save tickets with a personal note to refer back. These are only visible to you.☝</p>
-              </div>
-              <div class="form-group" id="existingBookmark">
-                <p>You've already bookmarked this one. Delete it first to save again ⛔.</p>
-              </div>
-              <div class="bookmarksForm" id="bookmarksForm">
-                <div class="form-group">
-                  <textarea name="note" class="form-control" id="personalNote" maxlength="240" placeholder="Enter your personal note" required></textarea>
-                  <h6 class="pull-right" id="count_message"></h6>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-success" id="saveBookmark" onclick="bookmarkTicket()">Save</button>
-                </div>
-              </div>
-              <table class="table bookmarksTable" id="bookmarksTable">
-                <thead>
-                    <tr>
-                        <th>Ticket ID</th>
-                        <th>Subject</th>
-                        <th>Personal Note</th>
-                        <th>Saved At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+        <div class="panel-content">
+          <div class="alert alert-info" role="alert">
+            Save tickets with a personal note to refer back. These are only visible to you.☝
+          </div>
+          <div class="alert alert-success" role="alert" id="existingBookmark">
+            <p>You've already bookmarked this one. Delete it first to save a new personal note ⛔.</p>
+          </div>
+          <div class="bookmarksForm" id="bookmarksForm">
+            <div class="form-group">
+              <textarea name="note" class="form-control" id="personalNote" maxlength="240" placeholder="Enter your personal note" required></textarea>
+              <h6 class="pull-right" id="count_message"></h6>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success" id="saveBookmark" onclick="bookmarkTicket()">Save</button>
             </div>
           </div>
-      </div>
+          <table class="table table-striped bookmarksTable" id="bookmarksTable">
+            <thead class="thead-light">
+                <tr>
+                    <th>Ticket Subject</th>
+                    <th>Personal Note</th>
+                    <th>Saved At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
     </div>
+
+    <!-- tool credit -->
+    <footer class="site-footer">
+      A tool of <img alt="handyman" class="app-icon app-icon--normal" src="../styles/images/icon.svg" style="width:24px;display:inline-block" alt="A tool of handyman (made during #Refresh2021 by @HarishKotra)" title="A tool of handyman (made during #Refresh2021 by @HarishKotra)"> handyman (made during <a href="https://www.freshworks.com/press-releases/the-freshworks-developer-community-builds-new-applications-that-enhance-customer-and-employee-delight/" target="_blank">#Refresh2021</a> by <a href="https://twitter.com/HarishKotra" target="_blank">@HarishKotra</a>)
+    </footer>
   </body>
-  <script src="../scripts/app.js"></script>
   <script>
     //code to show characters remaining under textarea for bookmarks.
     var text_max = 240;

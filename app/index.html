@@ -3,99 +3,11 @@
     <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
     <link rel="stylesheet" type="text/css" href="styles/style.css" />
     <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css" />
-    <!-- library for simple lightweight accordion -->
-    <link rel="stylesheet" href="https://unpkg.com/accordion-js@3.1.1/dist/accordion.min.css">
-    <script src="https://unpkg.com/accordion-js@3.1.1/dist/accordion.min.js"></script>  
   </head>
 
   <body>
     <div class="fw-widget-wrapper">
-      <p id="apptext"></p>
-      <div class="accordion-container">
-        <div class="sentiment-section" id="sentiment-section">
-
-          <!-- divs to show sentiment -->
-          <div class="alert alert-success" role="alert" id="pos"></div>
-          <div class="alert alert-warning" role="alert" id="neutral"></div>
-          <div class="alert alert-success" role="alert" id="neg"></div>
-
-        </div>
-        <!-- Bookmarklet accordion -->
-        <div class="ac">
-          <h2 class="ac-header">
-            <button class="ac-trigger"><img src="https://f9ir.github.io/acc/acc/img/Bookmarks.png" class="img-response ac-icon wave" alt="Bookmarklet" title="Bookmarklet" />Bookmarklet</button>
-          </h2>
-          <div class="ac-panel">
-            <div class="panel-content">
-              <div class="form-group">
-                <p>Save tickets with a personal note to refer back. These are only visible to you.☝</p>
-              </div>
-              <div class="form-group" id="existingBookmark">
-                <p>You've already bookmarked this one. Delete it first to save again ⛔.</p>
-              </div>
-              <div class="bookmarksForm" id="bookmarksForm">
-                <div class="form-group">
-                  <textarea name="note" class="form-control" id="personalNote" placeholder="Enter your personal note" required></textarea>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-success" id="saveBookmark" onclick="bookmarkTicket()">Save</button>
-                </div>
-              </div>
-              <table class="table bookmarksTable" id="bookmarksTable">
-                  <tr>
-                      <th>Ticket ID</th>
-                      <th>Subject</th>
-                      <th>Personal Note</th>
-                      <th>Saved At</th>
-                      <th>Actions</th>
-                  </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recently Viewed Tickets accordion -->
-        <div class="ac">
-          <h2 class="ac-header">
-            <button class="ac-trigger"><span class="wave">👀</span> Recently Viewed Tickets</button>
-          </h2>
-          <div class="ac-panel">
-            <div class="panel-content">
-              <p>🕑 Here are the tickets you've viewed recently. Click on the Ticket ID to view the ticket.</p>
-              <table class="table recentlyViewed" id="recentlyViewed">
-                <tr>
-                    <th>Tickets</th>
-                </tr>
-              </table>
-            </div>
-            
-          </div>
-        </div>
-
-        <!-- Attachments Assist accordion -->
-        <div class="ac">
-          <h2 class="ac-header">
-            <button class="ac-trigger"><span class="wave">🎴</span> Attachments Assist</button>
-          </h2>
-          <div class="ac-panel">
-            <div class="panel-content">
-              <div class="form-group">
-                <p>All attachments of this ticket are available here.</p>
-                <p id="totalAttachments"></p>
-                <p id="totalAttachmentsSize"></p> 
-              </div>
-              <table class="table attachmentsTable" id="attachmentsTable">
-                  <tr>
-                      <th>File Name</th>
-                  </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </div>
   </body>
   <script src="scripts/app.js"></script>
-  <script>new Accordion('.accordion-container');</script>
 </html>

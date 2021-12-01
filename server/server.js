@@ -22,7 +22,7 @@ exports = {
         )
     },
     removeAgentsTicket: async function (request) {
-        console.info('Remove request received ' + JSON.stringify(request));
+        //console.info('Remove request received ' + JSON.stringify(request));
         if (request == null || request.agentId == null) {
             renderData(null,  {'message': 'Agent ID cannot be empty'}); 
             return; 
@@ -42,26 +42,13 @@ exports = {
                 renderData(error, null); 
             }
         );
-    },
-    formatBytes: async function (request) {
-        if (request.bytes === 0) renderData('0 Bytes', null);
-    
-        const k = 1024;
-        const dm = request.decimals < 0 ? 0 : request.decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    
-        const i = Math.floor(Math.log(request.bytes) / Math.log(k));
-    
-        renderData(null, parseFloat((request.bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]);
     }
 };
 
 async function saveTicketForAgent(request) {
     try {
-        console.info('Saving ticket with data ' + JSON.stringify(request)); 
-
+        //console.info('Saving ticket with data ' + JSON.stringify(request)); 
         let existingTickets = null; 
-
         try {
             existingTickets = await getAgentTicketsFromDb(request.agentId)
         } catch(err) {
