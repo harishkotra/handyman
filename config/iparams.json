@@ -7,15 +7,5 @@
         "product": "freshdesk"
       },
       "required": true
-    },
-    "APIKey": {
-      "display_name": "API Key",
-      "description": "Please enter your API key",
-      "type": "text",
-      "secure": true,
-      "required": true,
-      "type_attributes": {
-        "product": "freshdesk"
-      }
     }
 }
