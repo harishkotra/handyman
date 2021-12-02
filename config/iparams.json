@@ -17,31 +17,5 @@
       "type_attributes": {
         "product": "freshdesk"
       }
-    },
-    "viewHistorySize": {
-        "display_name": "Tickets Count",
-        "description": "Please enter the number of tickets you want to track for recently viewed section.",
-        "type": "number",
-        "required": true
-    },
-    "enableBookmarksTimeout": {
-        "display_name": "Auto Delete Bookmarks",
-        "description": "Do you want to enable auto-cleanup of bookmarks after a certain time?",
-        "type": "radio",
-        "options": [
-          "Yes",
-          "No"
-        ],
-        "default_value": "No",
-        "events": [{
-            "change": "enableBookmarksTimeoutChanged"
-        }]
-    },
-    "bookmarksTimeout": {
-        "display_name": "Tickets Count",
-        "description": "Please enter the number of days after which the bookmarks are cleared.",
-        "type": "number",
-        "required": false,
-        "visible": false
     }
 }

@@ -1,18 +1,3 @@
-  document.onreadystatechange = function () {
-    if (document.readyState === 'interactive') renderApp();
-  
-    function renderApp() {
-      var onInit = app.initialized();
-  
-      onInit.then(getClient).catch(handleErr);
-  
-      function getClient(_client) {
-        window.client = _client;
-        client.events.on('app.activated', onAppActivate);
-      }
-    }
-  };
-  
   document.addEventListener('DOMContentLoaded', function () {
 
     app.initialized().then(function (_client) {
@@ -25,7 +10,7 @@
    * Function to display bookmarked tickets. Used after adding tickets, removing tickets and also onAppActivate
    */
   function displayBookmarkedTickets(){
-    client.data.get("domainName").then(
+    _client.data.get("domainName").then(
       function (freshdeskDomain) {
       
           getLoggedInUser().then(
@@ -34,7 +19,7 @@
                       'agentId': loggedInUser.id
                   };
   
-                  client.request.invoke('displayBookmarkedTickets', data)
+                  _client.request.invoke('displayBookmarkedTickets', data)
                       .then(
                           function (response) {
   
@@ -118,7 +103,7 @@
                 'savedAt': new Date().getTime()
             };
   
-            client.request.invoke("bookmarkTicket", data).then(
+            _client.request.invoke("bookmarkTicket", data).then(
                 function (data) {
                     
                     console.log("Bookmarked ticket: " + JSON.stringify(data))
@@ -127,7 +112,7 @@
                     button.disabled = true;
                     button.innerHTML = "Saved ✌";
   
-                    // client.interface.trigger("showNotify", {
+                    // _client.interface.trigger("showNotify", {
                     //   type: "success", title: "Success",
                     //   message: "Your bookmark has been saved ✌"
                     // }).then(function(data) {
@@ -157,11 +142,11 @@
             'ticketId': parseInt(ticket.id)
         }
         //console.info('Removing the agent ticket with data ' + JSON.stringify(data));
-        client.request.invoke("removeAgentsTicket", data).then(
+        _client.request.invoke("removeAgentsTicket", data).then(
             function (data) {
                 
                 //console.log("Removed ticket: " + JSON.stringify(data))
-                // client.interface.trigger("showNotify", {
+                // _client.interface.trigger("showNotify", {
                 //   type: "danger", title: "Deleted",
                 //   message: "Your bookmark has been removed"
                 // }).then(function(data) {
@@ -202,11 +187,11 @@
   }
   
   /**
-   * Generic function to re-use and get current logged in user information using client.data.get("loggedInUser") API
+   * Generic function to re-use and get current logged in user information using _client.data.get("loggedInUser") API
    * @returns JSON Object - Current logged in user information
    */
   function getLoggedInUser() {
-    return client.data.get("loggedInUser").then(
+    return _client.data.get("loggedInUser").then(
         function (response) {
             return response.loggedInUser;
         },
@@ -217,11 +202,11 @@
   }
   
   /**
-   * Get current open ticket information using client.data.get("ticket") API
+   * Get current open ticket information using _client.data.get("ticket") API
    * @returns current ticket information
    */
   function getCurrentTicket() {
-    return client.data.get("ticket").then(
+    return _client.data.get("ticket").then(
         function (data) {
             return data.ticket;
         },
