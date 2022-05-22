@@ -15,12 +15,12 @@
           <div class="alert alert-info" role="alert">
             Save tickets with a personal note to refer back. These are only visible to you.☝
           </div>
-          <div class="alert alert-success" role="alert" id="existingBookmark">
+          <!-- <div class="alert alert-success" role="alert" id="existingBookmark">
             <p>You've already bookmarked this one. Delete it first to save a new personal note ⛔.</p>
-          </div>
+          </div> -->
           <div class="bookmarksForm" id="bookmarksForm">
             <div class="form-group">
-              <textarea name="note" class="form-control" id="personalNote" maxlength="240" placeholder="Enter your personal note" required></textarea>
+              <textarea name="note" class="form-control" id="personalNote" maxlength="240" placeholder="Enter your personal note. Note: Existing bookmarks will be overridden." required></textarea>
               <h6 class="pull-right" id="count_message"></h6>
             </div>
             <div class="form-group">
@@ -40,34 +40,29 @@
           </table>
         </div>
     </div>
-
-    <!-- tool credit -->
-    <footer class="site-footer">
-      A tool of <img alt="handyman" class="app-icon app-icon--normal" src="../styles/images/icon.svg" style="width:24px;display:inline-block" alt="A tool of handyman (made during #Refresh2021 by @HarishKotra)" title="A tool of handyman (made during #Refresh2021 by @HarishKotra)"> handyman (made during <a href="https://www.freshworks.com/press-releases/the-freshworks-developer-community-builds-new-applications-that-enhance-customer-and-employee-delight/" target="_blank">#Refresh2021</a> by <a href="https://twitter.com/HarishKotra" target="_blank">@HarishKotra</a>)
-    </footer>
+    <script>
+      //code to show characters remaining under textarea for bookmarks.
+      var text_max = 240;
+      $('#count_message').html(text_max + ' remaining');
+      $('#personalNote').keyup(function() {
+          var text_length = $('#personalNote').val().length;
+          var text_remaining = text_max - text_length;
+          $('#count_message').html(text_remaining + ' remaining');
+      }); 
+  
+      /**
+       * Fallback function to ensure character limit works in all browsers.
+       */
+      function maxLength(el) {	
+          if (!('maxLength' in el)) {
+              var max = el.attributes.maxLength.value;
+              el.onkeypress = function () {
+                  if (this.value.length >= max) return false;
+              };
+          }
+      }
+  
+      maxLength(document.getElementById("personalNote"));
+    </script>
   </body>
-  <script>
-    //code to show characters remaining under textarea for bookmarks.
-    var text_max = 240;
-    $('#count_message').html(text_max + ' remaining');
-    $('#personalNote').keyup(function() {
-        var text_length = $('#personalNote').val().length;
-        var text_remaining = text_max - text_length;
-        $('#count_message').html(text_remaining + ' remaining');
-    }); 
-
-    /**
-     * Fallback function to ensure character limit works in all browsers.
-     */
-    function maxLength(el) {	
-        if (!('maxLength' in el)) {
-            var max = el.attributes.maxLength.value;
-            el.onkeypress = function () {
-                if (this.value.length >= max) return false;
-            };
-        }
-    }
-
-    maxLength(document.getElementById("personalNote"));
-  </script>
 </html>

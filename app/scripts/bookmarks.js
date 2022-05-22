@@ -18,37 +18,27 @@
                   let data = {
                       'agentId': loggedInUser.id
                   };
-  
+
                   _client.request.invoke('displayBookmarkedTickets', data)
                       .then(
                           function (response) {
   
                               const bookmarksTable = document.getElementById('bookmarksTable');
-
                               if (response.response.savedTickets == null || response.response.savedTickets.length === 0) {
                                   hide(q('#bookmarksTable'));
                                   hide(q('#existingBookmark'));
                                   return;
                               }
-  
+                              
                               bookmarksTable.style.display = "table";
   
                               const rowCount = bookmarksTable.rows.length;
                               for (let x = rowCount - 1; x > 0; x--) {
                                   bookmarksTable.deleteRow(x);
                               }
-  
+                  
                               response.response.savedTickets.forEach(ticket => {
-                                  insertRow(freshdeskDomain.domainName, ticket.ticketId, ticket.ticketSubject, ticket.personalNote, ticket.savedAt);
-                                  getCurrentTicket().then(function(currentTicket) {
-                                    if(currentTicket.id == ticket.ticketId) {
-                                      hide(q('#bookmarksForm'));
-                                      show(q('#existingBookmark'));
-                                    } else {
-                                      show(q('#bookmarksForm'));
-                                      hide(q('#existingBookmark'));
-                                    }
-                                  })
+                                insertRow(freshdeskDomain.domainName, ticket.ticketId, ticket.ticketSubject, ticket.personalNote, ticket.savedAt);
                               });
                           },
                           function (error) {
@@ -73,15 +63,16 @@
    * @param {timestamp} savedAt 
    */
   function insertRow(freshdeskDomainName, ticketId, ticketSubject, personalNote, savedAt) {
-    const table = document.getElementById('bookmarksTable').insertRow(1);
-  
-    //const c1 = table.insertCell(0);
-    const c1 = table.insertCell(0);
-    const c2 = table.insertCell(1);
-    const c3 = table.insertCell(2);
-    const c4 = table.insertCell(3);
     
-    //c1.innerHTML = '<a target="blank" href="https://' + freshdeskDomainName + '/a/tickets/' + ticketId + '" data-toggle="tooltip" data-placement="top" title="View Ticket" >' + ticketId + '</a>';
+    const table = document.getElementById('bookmarksTable');
+    const tr = table.insertRow(1);
+    
+    tr.id = "ticketId_" + ticketId;
+    const c1 = tr.insertCell(0);
+    const c2 = tr.insertCell(1);
+    const c3 = tr.insertCell(2);
+    const c4 = tr.insertCell(3);
+
     c1.innerHTML = '<a target="blank" href="https://' + freshdeskDomainName + '/a/tickets/'
     + ticketId + '" data-toggle="tooltip" data-placement="top" title="View Ticket" >' + ticketSubject + '</a>';
     c2.innerHTML = personalNote;
@@ -145,16 +136,6 @@
         _client.request.invoke("removeAgentsTicket", data).then(
             function (data) {
                 
-                //console.log("Removed ticket: " + JSON.stringify(data))
-                // _client.interface.trigger("showNotify", {
-                //   type: "danger", title: "Deleted",
-                //   message: "Your bookmark has been removed"
-                // }).then(function(data) {
-                //   //console.log("Done: " + JSON.stringify(data))
-                // }).catch(function(error) {
-                //   console.log("Something went wrong." + JSON.stringify(error))
-                // });
-  
                 displayBookmarkedTickets();
   
                 getCurrentTicket().then(function(currentTicket) {

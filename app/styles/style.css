@@ -50,7 +50,7 @@ body {
   position: relative;
 }
 .site-footer {
-  position: absolute;
+  position: relative;
   text-align: center;
   margin: 0 auto;
   bottom: 0;
